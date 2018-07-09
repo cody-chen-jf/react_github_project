@@ -9,6 +9,8 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View, Image, Text } from 'react-native'
 import TabNavigator from 'react-native-tab-navigator'
+import { Navigator } from 'react-native-deprecated-custom-components'
+import Boy from './Boy'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -27,58 +29,69 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <TabNavigator>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'tb_popular'}
-            title="最热"
-            renderIcon={() => <Image style={styles.image1} source={require('./res/images/ic_polular.png')}/>}
-            renderSelectedIcon={() => <Image style={[styles.image1, {tintColor: 'blue'}]} source={require('./res/images/ic_polular.png')}/>}
-            badgeText="1"
-            onPress={() => this.setState({selectedTab: 'tb_popular'})}>
-            <View style={styles.page1}>
-              <Text>
-                aaa
-              </Text>
-            </View>
-          </TabNavigator.Item>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'tb_trending'}
-            title="趋势"
-            renderIcon={() => <Image style={styles.image1} source={require('./res/images/ic_polular.png')}/>}
-            renderSelectedIcon={() => <Image style={[styles.image1, {tintColor: 'blue'}]} source={require('./res/images/ic_polular.png')}/>}
-            badgeText="1"
-            onPress={() => this.setState({selectedTab: 'tb_trending'})}>
-            <View style={styles.page1}>
-              <Text>
-                aaa
-              </Text>
-            </View>
-          </TabNavigator.Item>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'tb_favorite'}
-            title="收藏"
-            renderIcon={() => <Image style={styles.image2} source={require('./res/images/ic_trending.png')}/>}
-            renderSelectedIcon={() => <Image style={[styles.image2, {tintColor: 'blue'}]} source={require('./res/images/ic_trending.png')}/>}
-            onPress={() => this.setState({selectedTab: 'tb_favorite'})}>
-            <View style={styles.page2}>
-              <Text>
-                bbb
-              </Text>
-            </View>
-          </TabNavigator.Item>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'tb_my'}
-            title="我的"
-            renderIcon={() => <Image style={styles.image2} source={require('./res/images/ic_trending.png')}/>}
-            renderSelectedIcon={() => <Image style={[styles.image2, {tintColor: 'blue'}]} source={require('./res/images/ic_trending.png')}/>}
-            onPress={() => this.setState({selectedTab: 'tb_my'})}>
-            <View style={styles.page2}>
-              <Text>
-                bbb
-              </Text>
-            </View>
-          </TabNavigator.Item>
-        </TabNavigator>
+        {/*<TabNavigator>*/}
+        {/*<TabNavigator.Item*/}
+        {/*selected={this.state.selectedTab === 'tb_popular'}*/}
+        {/*title="最热"*/}
+        {/*renderIcon={() => <Image style={styles.image1} source={require('./res/images/ic_polular.png')}/>}*/}
+        {/*renderSelectedIcon={() => <Image style={[styles.image1, {tintColor: 'blue'}]} source={require('./res/images/ic_polular.png')}/>}*/}
+        {/*badgeText="1"*/}
+        {/*onPress={() => this.setState({selectedTab: 'tb_popular'})}>*/}
+        {/*<View style={styles.page1}>*/}
+        {/*<Text>*/}
+        {/*aaa*/}
+        {/*</Text>*/}
+        {/*</View>*/}
+        {/*</TabNavigator.Item>*/}
+        {/*<TabNavigator.Item*/}
+        {/*selected={this.state.selectedTab === 'tb_trending'}*/}
+        {/*title="趋势"*/}
+        {/*renderIcon={() => <Image style={styles.image1} source={require('./res/images/ic_polular.png')}/>}*/}
+        {/*renderSelectedIcon={() => <Image style={[styles.image1, {tintColor: 'blue'}]} source={require('./res/images/ic_polular.png')}/>}*/}
+        {/*badgeText="1"*/}
+        {/*onPress={() => this.setState({selectedTab: 'tb_trending'})}>*/}
+        {/*<View style={styles.page1}>*/}
+        {/*<Text>*/}
+        {/*aaa*/}
+        {/*</Text>*/}
+        {/*</View>*/}
+        {/*</TabNavigator.Item>*/}
+        {/*<TabNavigator.Item*/}
+        {/*selected={this.state.selectedTab === 'tb_favorite'}*/}
+        {/*title="收藏"*/}
+        {/*renderIcon={() => <Image style={styles.image2} source={require('./res/images/ic_trending.png')}/>}*/}
+        {/*renderSelectedIcon={() => <Image style={[styles.image2, {tintColor: 'blue'}]} source={require('./res/images/ic_trending.png')}/>}*/}
+        {/*onPress={() => this.setState({selectedTab: 'tb_favorite'})}>*/}
+        {/*<View style={styles.page2}>*/}
+        {/*<Text>*/}
+        {/*bbb*/}
+        {/*</Text>*/}
+        {/*</View>*/}
+        {/*</TabNavigator.Item>*/}
+        {/*<TabNavigator.Item*/}
+        {/*selected={this.state.selectedTab === 'tb_my'}*/}
+        {/*title="我的"*/}
+        {/*renderIcon={() => <Image style={styles.image2} source={require('./res/images/ic_trending.png')}/>}*/}
+        {/*renderSelectedIcon={() => <Image style={[styles.image2, {tintColor: 'blue'}]} source={require('./res/images/ic_trending.png')}/>}*/}
+        {/*onPress={() => this.setState({selectedTab: 'tb_my'})}>*/}
+        {/*<View style={styles.page2}>*/}
+        {/*<Text>*/}
+        {/*bbb*/}
+        {/*</Text>*/}
+        {/*</View>*/}
+        {/*</TabNavigator.Item>*/}
+        {/*</TabNavigator>*/}
+
+        <Navigator
+          initialRoute={{
+            component: Boy
+          }}
+          renderScene={(route, navigator) => {
+            let Component = route.component
+            return <Component navigator={navigator} {...route.params}/>
+          }}>
+
+        </Navigator>
       </View>
     )
   }
