@@ -17,6 +17,7 @@
     "babel-jest": "23.2.0",
     "babel-preset-react-native": "^5",
     "jest": "23.3.0",
+    "react-native-easy-toast": "^1.1.0",
     "react-test-renderer": "16.4.1"
   },
   "jest": {
