@@ -12,6 +12,7 @@ import TabNavigator from 'react-native-tab-navigator'
 import { Navigator } from 'react-native-deprecated-custom-components'
 import Boy from './Boy'
 import ListViewTest from './ListViewTest'
+import FetchTest from './FetchTest'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -93,9 +94,21 @@ export default class App extends Component<Props> {
           {/*}}>*/}
         {/*</Navigator>*/}
 
+        {/*<Navigator*/}
+          {/*initialRoute={{*/}
+            {/*component: ListViewTest*/}
+          {/*}}*/}
+          {/*renderScene={(route, navigator) => {*/}
+            {/*let Component = route.component*/}
+            {/*return <Component navigator={navigator} {...route.params}/>*/}
+          {/*}}>*/}
+
+        {/*</Navigator>*/}
+
+
         <Navigator
           initialRoute={{
-            component: ListViewTest
+            component: FetchTest
           }}
           renderScene={(route, navigator) => {
             let Component = route.component
