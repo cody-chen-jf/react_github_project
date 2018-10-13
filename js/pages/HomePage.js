@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 
 import TabNavigator from 'react-native-tab-navigator'
+import PopularPage from './PopularPage'
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -23,14 +24,15 @@ export default class HomePage extends Component {
         <TabNavigator>
           <TabNavigator.Item
             selected={this.state.selectedTab === 'tb_popular'}
-            selectedTitleStyle={{color: 'red'}}
+            selectedTitleStyle={{color: '#2196F3'}}
             title="最热"
             renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_polular.png')}/>}
-            renderSelectedIcon={() => <Image style={[styles.image, {tintColor: 'red'}]}
+            renderSelectedIcon={() => <Image style={[styles.image, {tintColor: '#2196F3'}]}
                                              source={require('../../res/images/ic_polular.png')}/>}
             onPress={() => this.setState({selectedTab: 'tb_popular'})}>
-            <View style={{backgroundColor: 'red', flex: 1}}/>
+            <PopularPage />
           </TabNavigator.Item>
+
           <TabNavigator.Item
             selected={this.state.selectedTab === 'tb_trending'}
             title="趋势"
