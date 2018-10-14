@@ -19,9 +19,7 @@ function setup(){
     render() {
       return (
         <Navigator
-          initialRoute={{
-            component: WelcomePage
-          }}
+          initialRoute={{ component: WelcomePage }}
           renderScene={(route, navigator) => this.renderScene(route, navigator)}
         />
       )
