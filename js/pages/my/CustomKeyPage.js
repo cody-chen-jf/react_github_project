@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Image
+  Image,
+  Alert
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar'
 import ViewUtils from '../../util/ViewUtils'
@@ -32,7 +33,6 @@ export default class CustomKeyPage extends Component {
 
   loadData() {
     this.languageDao.fetch().then(result => {
-      console.log('result2 === ', result)
       this.setState({
         dataArray: result
       })
@@ -42,12 +42,35 @@ export default class CustomKeyPage extends Component {
   }
 
   onSave() {
-    if(this.changeValues.length === 0) {
+    if (this.changeValues.length === 0) {
       this.props.navigator.pop()
       return
     }
     this.languageDao.save(this.state.dataArray)
     this.props.navigator.pop()
+  }
+
+  onBack() {
+    if (this.changeValues.length === 0) {
+      this.props.navigator.pop()
+      return
+    }
+    Alert.alert(
+      'Message',
+      'Do you want to save the change？',
+      [
+        {
+          text: 'Cancel', onPress: () => {
+            this.props.navigator.pop()
+          }, style: 'cancel'
+        },
+        {
+          text: 'Save', onPress: () => {
+            this.onSave()
+          }
+        }
+      ]
+    )
   }
 
   renderView() {
@@ -85,7 +108,7 @@ export default class CustomKeyPage extends Component {
     return (
       <CheckBox
         style={{flex: 1, padding: 10}}
-        onClick={()=>this.onClick(data)}
+        onClick={() => this.onClick(data)}
         isChecked={data.checked}
         leftText={leftText}
         checkedImage={<Image source={require('../../pages/my/img/ic_check_box.png')}
@@ -102,7 +125,7 @@ export default class CustomKeyPage extends Component {
   }
 
   render() {
-    let rightButton = <TouchableOpacity>
+    let rightButton = <TouchableOpacity onPress={() => this.onSave()}>
       <View>
         <Text style={styles.right_button}>保存</Text>
       </View>
@@ -112,7 +135,7 @@ export default class CustomKeyPage extends Component {
         <NavigationBar
           title='自定义标签'
           style={{backgroundColor: '#2196F3'}}
-          leftButton={ViewUtils.getLeftButton(() => this.onSave())}
+          leftButton={ViewUtils.getLeftButton(() => this.onBack())}
           rightButton={rightButton}
         />
         <ScrollView>
