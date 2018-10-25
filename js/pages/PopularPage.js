@@ -5,7 +5,8 @@ import {
   Text,
   TextInput,
   ListView,
-  RefreshControl
+  RefreshControl,
+  DeviceEventEmitter
 } from 'react-native'
 import NavigationBar from './../common/NavigationBar'
 import DataRepository from '../expand/dao/DataRepository'
@@ -98,12 +99,28 @@ class PopularTab extends Component {
       isLoading: true
     })
     let url = this.generateUrl(this.props.tabLabel)
-    console.log('this.dataRepository === ', this.dataRepository.fetchNetRepository)
-    let data = await this.dataRepository.fetchNetRepository(url)
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(data.items),
-      isLoading: false
-    })
+    let data = await this.dataRepository.fetchRepository(url)
+    let items = data && data.items ? data.items : data ? data : []
+    if(items) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items),
+        isLoading: false
+      })
+    }
+    if(data && data.update_date && !this.dataRepository.checkDate(data.update_date)) {
+      DeviceEventEmitter.emit('showToast', '数据过时')
+      let data = await this.dataRepository.fetchNetRepository(url)
+      let items =  data.items
+      if (!items || items.length === 0) {
+        return
+      }
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items)
+      })
+      DeviceEventEmitter.emit('showToast', '显示网络数据')
+    } else {
+      DeviceEventEmitter.emit('showToast', '显示缓存数据')
+    }
   }
 
   render() {

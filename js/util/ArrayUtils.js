@@ -48,4 +48,20 @@ export default class ArrayUtils {
     return true
 
   }
+
+  /***
+   * 将指定元素移除
+   * @param arr
+   * @param item
+   */
+  static remove(arr, item) {
+    if (!arr) {
+      return
+    }
+    for (let i = 0; i < arr.length; i++){
+      if(item === arr[i]) {
+        arr.splice(i, 1)
+      }
+    }
+  }
 }

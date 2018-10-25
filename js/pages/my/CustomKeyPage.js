@@ -22,6 +22,7 @@ export default class CustomKeyPage extends Component {
     this.state = {
       dataArray: []
     }
+    this.isRemoveKey = this.props.isRemoveKey ? true : false
     this.array = []
     this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key)
     this.changeValues = []
@@ -43,8 +44,14 @@ export default class CustomKeyPage extends Component {
 
   onSave() {
     if (this.changeValues.length === 0) {
+      console.log('ooo === ', this.props.navigator)
       this.props.navigator.pop()
       return
+    }
+    if (this.isRemoveKey) {
+      for (let i = 0; i < this.changeValues.length; i++) {
+        ArrayUtils.remove(this.state.dataArray, this.changeValues[i])
+      }
     }
     this.languageDao.save(this.state.dataArray)
     this.props.navigator.pop()
@@ -105,11 +112,12 @@ export default class CustomKeyPage extends Component {
 
   renderCheckBox(data) {
     let leftText = data.name
+    let isChecked = this.isRemoveKey ? false : data.checked
     return (
       <CheckBox
         style={{flex: 1, padding: 10}}
         onClick={() => this.onClick(data)}
-        isChecked={data.checked}
+        isChecked={isChecked}
         leftText={leftText}
         checkedImage={<Image source={require('../../pages/my/img/ic_check_box.png')}
                              style={{tintColor: '#2196F3'}}/>}
@@ -125,18 +133,16 @@ export default class CustomKeyPage extends Component {
   }
 
   render() {
-    let rightButton = <TouchableOpacity onPress={() => this.onSave()}>
-      <View>
-        <Text style={styles.right_button}>保存</Text>
-      </View>
-    </TouchableOpacity>
+    let title = this.isRemoveKey ? '标签移除' : '自定义标签'
+    let rightButtonTitle = this.isRemoveKey ? '移除' : '保存'
+
     return (
       <View style={styles.container}>
         <NavigationBar
-          title='自定义标签'
+          title={title}
           style={{backgroundColor: '#2196F3'}}
           leftButton={ViewUtils.getLeftButton(() => this.onBack())}
-          rightButton={rightButton}
+          rightButton={ViewUtils.getRightButton(() => this.onSave(), rightButtonTitle)}
         />
         <ScrollView>
           {this.renderView()}
@@ -153,11 +159,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     margin: 10
-  },
-  right_button: {
-    color: 'white',
-    fontSize: 16,
-    margin: 5
   },
   line: {
     height: 0.5,
