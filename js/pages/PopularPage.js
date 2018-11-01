@@ -13,6 +13,7 @@ import DataRepository from '../expand/dao/DataRepository'
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
 import RepositoryCell from '../common/RepositoryCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
+import RepositoryDetail from './RepositoryDetail'
 
 export default class PopularPage extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ export default class PopularPage extends Component {
         {
           this.state.languages.map((result, index, array) => {
             let language = array[index]
-            return language.checked ? <PopularTab key={index} tabLabel={language.name}>Java</PopularTab> : null
+            return language.checked ? <PopularTab key={index} tabLabel={language.name} {...this.props} /> : null
           })
         }
       </ScrollableTabView> : null
@@ -91,7 +92,22 @@ class PopularTab extends Component {
   }
 
   renderRow(data) {
-    return <RepositoryCell data={data}/>
+    return <RepositoryCell
+      key={data.id}
+      data={data}
+      onSelect={() => this.onSelect(data)}
+    />
+  }
+
+  onSelect(item) {
+    console.log('item === ', item)
+    this.props.navigator.push({
+      component: RepositoryDetail,
+      params: {
+        item: item,
+        ...this.props
+      }
+    })
   }
 
   async onLoad() {

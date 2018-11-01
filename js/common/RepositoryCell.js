@@ -12,9 +12,7 @@ export default class RepositoryCell extends Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => {
-
-        }}
+        onPress={() => {this.props.onSelect()}}
       >
         <View style={styles.cell_container}>
           <Text style={styles.title}>{this.props.data.full_name}</Text>
