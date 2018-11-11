@@ -2,8 +2,18 @@ import React, { Component } from 'react'
 import {
   AsyncStorage
 } from 'react-native'
+import GitHubTrending from 'GitHubTrending'
+
+export const FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending'}
 
 export default class DataRepository {
+  constructor(flag) {
+    this.flag = flag
+    if (flag === FLAG_STORAGE.flag_trending) {
+      this.trending = new GitHubTrending()
+    }
+  }
+
   async fetchRepository(url) {
     let result = await this.fetchLocalRepository(url)
     if (result) {
@@ -47,8 +57,14 @@ export default class DataRepository {
  //  }
 
   async fetchNetRepository(url) {
-    let response = await fetch(url)
-    let returnData = await response.json()
+    let returnData
+    if(this.flag === FLAG_STORAGE.flag_trending) {
+      returnData = await this.trending.fetchTrending(url)
+    } else {
+      let response = await fetch(url)
+      returnData = await response.json()
+    }
+
     this.saveRepository(url, returnData.items)
     return returnData
   }

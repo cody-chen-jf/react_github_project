@@ -26,7 +26,7 @@ export default class SortKeyPage extends Component {
   }
 
   componentDidMount() {
-    this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key)
+    this.languageDao = new LanguageDao(this.props.flag)
     this.loadData()
   }
 
@@ -67,16 +67,16 @@ export default class SortKeyPage extends Component {
       return
     }
     Alert.alert(
-      'Message',
-      'Do you want to save the change？',
+      '提示',
+      '是否保存修改',
       [
         {
-          text: 'Cancel', onPress: () => {
+          text: '否', onPress: () => {
             this.props.navigator.pop()
           }, style: 'cancel'
         },
         {
-          text: 'Save', onPress: () => {
+          text: '是', onPress: () => {
             this.onSave(true)
           }
         }
@@ -104,6 +104,7 @@ export default class SortKeyPage extends Component {
   }
 
   render() {
+    let title = this.props.flag === FLAG_LANGUAGE.flag_language ? '语言排序' : '标签排序'
     let rightButton = <TouchableOpacity onPress={() => this.onSave()}>
       <View>
         <Text style={styles.right_button}>保存</Text>
@@ -112,7 +113,7 @@ export default class SortKeyPage extends Component {
     return (
       <View style={styles.container}>
         <NavigationBar
-          title="SortKeyPage"
+          title={title}
           statusBar={{
             backgroundColor: '#2196F3',
             barStyle: 'light-content'

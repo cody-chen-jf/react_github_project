@@ -6,7 +6,8 @@ import {
   Image,
   StyleSheet,
   StatusBar,
-  Platform
+  Platform,
+  ViewPropTypes
 } from 'react-native'
 
 const NAV_BAR_HEIGHT_ANDROID = 50
@@ -20,6 +21,7 @@ const StatusBarShape = {
 
 export default class NavigationBar extends Component {
   static propTypes = {
+    style: ViewPropTypes.style,
     title: PropTypes.string,
     titleView: PropTypes.element,
     hide: PropTypes.bool,

@@ -12,15 +12,16 @@ import NavigationBar from './../common/NavigationBar'
 import ViewUtils from './../util/ViewUtils'
 
 const URL = 'https://github.com/facebook/react-native'
+const TRENDING_URL = 'https://github.com/'
 
 export default class RepositoryDetail extends Component {
   constructor(props) {
     super(props)
-    this.url = this.props.item.html_url
-    this.title = this.props.item.full_name
+    this.url = this.props.item.html_url ? this.props.item.html_url : TRENDING_URL + this.props.item.fullName
+    this.title = this.props.item.full_name ? this.props.item.full_name : this.props.item.fullName
     this.state = {
-      url: this.props.item.html_url,
-      title: this.props.item.full_name,
+      url: this.url,
+      title: this.title,
       canGoBack: false
     }
   }
